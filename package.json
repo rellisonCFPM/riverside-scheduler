@@ -1,0 +1,15 @@
+{
+  "name": "riverside-studio-scheduler",
+  "version": "3.0.0",
+  "description": "Web-based studio scheduling app using Netlify + Supabase",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "npm install"
+  },
+  "keywords": ["scheduler", "studio", "cfpm", "netlify", "supabase"],
+  "author": "CFPM",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  }
+}
