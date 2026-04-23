@@ -1,15 +1,10 @@
-// netlify/functions/reservations.js
-// This is a Netlify Function that handles all API requests
-
 const { createClient } = require('@supabase/supabase-js');
 
-// Initialize Supabase
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
 
-// Helper: CORS headers
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'Content-Type',
@@ -17,7 +12,6 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
-// Handle preflight
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers };
@@ -60,7 +54,6 @@ exports.handler = async (event) => {
   }
 };
 
-// Get all reservations
 async function getReservations() {
   const { data, error } = await supabase
     .from('reservations')
@@ -76,18 +69,21 @@ async function getReservations() {
   };
 }
 
-// Get available slots for a date
 async function getAvailableSlots(date) {
   const { data, error } = await supabase
     .from('reservations')
-    .select('time')
+    .select('*')
     .eq('date', date);
 
   if (error) throw error;
 
-  const reserved = new Set(data.map(r => r.time));
+  // Create map of booked slots with who booked them
+  const bookedMap = {};
+  data.forEach(r => {
+    bookedMap[r.time] = r.name;
+  });
 
-  // Generate all time slots (8am-7pm in 15-min increments)
+  // Generate all time slots (8am-6pm in 15-min increments)
   const slots = [];
   for (let h = 8; h <= 18; h++) {
     for (let m = 0; m < 60; m += 15) {
@@ -98,7 +94,8 @@ async function getAvailableSlots(date) {
 
       slots.push({
         time,
-        available: !reserved.has(time)
+        available: !bookedMap[time],
+        bookedBy: bookedMap[time] || null
       });
     }
   }
@@ -110,11 +107,10 @@ async function getAvailableSlots(date) {
   };
 }
 
-// Create reservation
 async function createReservation(payload) {
-  const { date, time, name, email } = payload;
+  const { date, times, name, email } = payload;
 
-  if (!date || !time || !name || !email) {
+  if (!date || !times || !Array.isArray(times) || times.length === 0 || !name || !email) {
     return {
       statusCode: 400,
       headers,
@@ -122,18 +118,19 @@ async function createReservation(payload) {
     };
   }
 
-  const id = `res_${Date.now()}`;
+  // Create one reservation record per time slot
+  const reservations = times.map(time => ({
+    id: `res_${Date.now()}_${time.replace(/[^a-z0-9]/gi, '')}`,
+    date,
+    time,
+    name,
+    email,
+    created_at: new Date().toISOString()
+  }));
 
   const { data, error } = await supabase
     .from('reservations')
-    .insert([{
-      id,
-      date,
-      time,
-      name,
-      email,
-      created_at: new Date().toISOString()
-    }])
+    .insert(reservations)
     .select();
 
   if (error) {
@@ -141,7 +138,7 @@ async function createReservation(payload) {
       return {
         statusCode: 409,
         headers,
-        body: JSON.stringify({ error: 'Time slot already booked' })
+        body: JSON.stringify({ error: 'One or more time slots already booked' })
       };
     }
     throw error;
@@ -150,19 +147,18 @@ async function createReservation(payload) {
   return {
     statusCode: 201,
     headers,
-    body: JSON.stringify(data[0])
+    body: JSON.stringify({ success: true, reserved: times.length })
   };
 }
 
-// Cancel reservation
 async function cancelReservation(payload) {
-  const { id, email } = payload;
+  const { date, time, email } = payload;
 
-  if (!id || !email) {
+  if (!date || !time || !email) {
     return {
       statusCode: 400,
       headers,
-      body: JSON.stringify({ error: 'Missing id or email' })
+      body: JSON.stringify({ error: 'Missing required fields' })
     };
   }
 
@@ -170,7 +166,8 @@ async function cancelReservation(payload) {
   const { data: reservation, error: fetchError } = await supabase
     .from('reservations')
     .select('email')
-    .eq('id', id)
+    .eq('date', date)
+    .eq('time', time)
     .single();
 
   if (fetchError || !reservation) {
@@ -192,7 +189,8 @@ async function cancelReservation(payload) {
   const { error: deleteError } = await supabase
     .from('reservations')
     .delete()
-    .eq('id', id);
+    .eq('date', date)
+    .eq('time', time);
 
   if (deleteError) throw deleteError;
 
