@@ -1,4 +1,4 @@
-// netlify/functions/reservations.js
+/// netlify/functions/reservations.js
 // This is a Netlify Function that handles all API requests
 
 const { createClient } = require('@supabase/supabase-js');
