@@ -36,7 +36,6 @@
       padding: 1rem;
     }
 
-    /* Header */
     header {
       background: linear-gradient(135deg, var(--cfpm-blue) 0%, #0256a3 100%);
       color: white;
@@ -59,7 +58,6 @@
       font-weight: 400;
     }
 
-    /* Main layout */
     .layout {
       display: grid;
       grid-template-columns: 1fr;
@@ -73,7 +71,6 @@
       }
     }
 
-    /* Sidebar */
     .sidebar {
       background: white;
       border-radius: 12px;
@@ -183,7 +180,6 @@
       transform: none;
     }
 
-    /* Content */
     .content {
       background: white;
       border-radius: 12px;
@@ -198,7 +194,6 @@
       font-weight: 600;
     }
 
-    /* Time slots grid */
     .slots-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -223,6 +218,22 @@
       font-size: 0.85rem;
       font-weight: 600;
       user-select: none;
+      min-height: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slot-time {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .slot-person {
+      font-size: 0.7rem;
+      font-weight: 400;
+      margin-top: 0.3rem;
     }
 
     .slot.available {
@@ -239,9 +250,9 @@
     }
 
     .slot.selected {
-      background: var(--cfpm-blue);
+      background: var(--cfpm-green);
       color: white;
-      border-color: var(--cfpm-blue);
+      border-color: var(--cfpm-green);
     }
 
     .slot.booked {
@@ -251,7 +262,16 @@
       border-color: var(--border-light);
     }
 
-    /* Reservations list */
+    .slot-count {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--cfpm-gray);
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--cfpm-blue);
+    }
+
     .reservations-list {
       margin-top: 2rem;
       border-top: 2px solid var(--border-light);
@@ -291,7 +311,6 @@
       min-width: 100px;
     }
 
-    /* Status messages */
     .message {
       padding: 1rem;
       border-radius: 8px;
@@ -328,7 +347,6 @@
       border-left: 4px solid var(--cfpm-blue);
     }
 
-    /* Loading state */
     .loading {
       text-align: center;
       padding: 2rem;
@@ -350,7 +368,6 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Tabs */
     .tabs {
       display: flex;
       gap: 0.5rem;
@@ -390,19 +407,22 @@
       display: block;
     }
 
-    /* Empty state */
     .empty-state {
       text-align: center;
       padding: 2rem;
       color: var(--text-light);
     }
 
-    .empty-state-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+    .info-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #856404;
     }
 
-    /* Responsive */
     @media (max-width: 767px) {
       header h1 {
         font-size: 1.5rem;
@@ -435,7 +455,6 @@
       }
     }
 
-    /* Utility */
     .mt-1 { margin-top: 1rem; }
     .mt-2 { margin-top: 2rem; }
     .mb-1 { margin-bottom: 1rem; }
@@ -454,7 +473,6 @@
     <div id="messages"></div>
 
     <div class="layout">
-      <!-- Sidebar: Reservation Form -->
       <div class="sidebar">
         <h3>Make a Reservation</h3>
 
@@ -473,33 +491,32 @@
           <input type="date" id="date" required>
         </div>
 
-        <div class="form-group">
-          <label for="time">Time</label>
-          <select id="time" required disabled>
-            <option value="">Select a time</option>
-          </select>
-        </div>
+        <button class="btn btn-primary" id="reserveBtn">Reserve Selected Slots</button>
 
-        <button class="btn btn-primary" id="reserveBtn">Reserve Now</button>
+        <div id="slotCount" class="slot-count" style="display:none;">
+          <span id="selectedCount">0</span> slot(s) selected
+        </div>
 
         <div class="form-group mt-2">
           <label for="filterEmail">View My Reservations</label>
           <input type="email" id="filterEmail" placeholder="Enter your email">
         </div>
         <button class="btn btn-secondary" id="filterBtn">Load My Bookings</button>
+
+        <div class="info-box">
+          💡 <strong>Note:</strong> For bookings between 6:15 PM and 7:59 AM, please contact the studio directly.
+        </div>
       </div>
 
-      <!-- Main Content: Schedule -->
       <div class="content">
         <div class="tabs">
           <button class="tab-btn active" data-tab="schedule">Schedule</button>
           <button class="tab-btn" data-tab="reservations">My Bookings</button>
         </div>
 
-        <!-- Schedule Tab -->
         <div id="schedule" class="tab-content active">
           <h2>Available Times</h2>
-          <p class="text-muted" style="margin-bottom: 1rem;">Select a date to see available time slots</p>
+          <p class="text-muted" style="margin-bottom: 1rem;">Click time slots to select multiple (they'll turn green). Then click "Reserve Selected Slots"</p>
           
           <div id="slotsContainer" class="loading">
             <div class="spinner"></div>
@@ -507,7 +524,6 @@
           </div>
         </div>
 
-        <!-- Reservations Tab -->
         <div id="reservations" class="tab-content">
           <h2>Your Reservations</h2>
           <div id="myReservations" class="empty-state">
@@ -519,7 +535,6 @@
   </div>
 
   <script>
-    // Call Netlify Functions
     const API = {
       getReservations: () => 
         fetch('/.netlify/functions/reservations?action=list').then(r => r.json()),
@@ -527,46 +542,37 @@
       getAvailable: (date) => 
         fetch(`/.netlify/functions/reservations?action=available&date=${date}`).then(r => r.json()),
       
-      reserve: (date, time, name, email) => 
+      reserve: (date, times, name, email) => 
         fetch('/.netlify/functions/reservations?action=reserve', {
           method: 'POST',
-          body: JSON.stringify({ date, time, name, email })
+          body: JSON.stringify({ date, times, name, email })
         }).then(r => r.json()),
       
-      cancel: (id, email) =>
+      cancel: (date, time, email) =>
         fetch('/.netlify/functions/reservations?action=cancel', {
           method: 'DELETE',
-          body: JSON.stringify({ id, email })
+          body: JSON.stringify({ date, time, email })
         }).then(r => r.json())
     };
 
     const state = {
       selectedDate: null,
-      selectedTime: null,
+      selectedSlots: [],
       reservations: [],
       userEmail: null
     };
 
-    // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').min = today;
     document.getElementById('date').value = today;
 
-    // Event: Date picker change
     document.getElementById('date').addEventListener('change', (e) => {
       state.selectedDate = e.target.value;
-      state.selectedTime = null;
-      document.getElementById('time').disabled = true;
-      document.getElementById('time').innerHTML = '<option value="">Loading times...</option>';
+      state.selectedSlots = [];
+      document.getElementById('slotCount').style.display = 'none';
       loadTimeSlots();
     });
 
-    // Event: Time picker change
-    document.getElementById('time').addEventListener('change', (e) => {
-      state.selectedTime = e.target.value;
-    });
-
-    // Event: Tab switching
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -576,15 +582,14 @@
       });
     });
 
-    // Event: Reserve button
     document.getElementById('reserveBtn').addEventListener('click', async () => {
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const date = state.selectedDate;
-      const time = state.selectedTime;
+      const times = state.selectedSlots;
 
-      if (!name || !email || !date || !time) {
-        showMessage('Please fill in all fields', 'error');
+      if (!name || !email || !date || times.length === 0) {
+        showMessage('Please fill in name, email, select a date, and choose at least one time slot', 'error');
         return;
       }
 
@@ -593,29 +598,26 @@
       btn.textContent = 'Reserving...';
 
       try {
-        const result = await API.reserve(date, time, name, email);
+        const result = await API.reserve(date, times, name, email);
         if (result.error) throw new Error(result.error);
 
-        showMessage(`✓ Reserved for ${time} on ${date}!`, 'success');
+        showMessage(`✓ Reserved ${times.length} slot(s) for ${date}!`, 'success');
         
-        // Reset form
         document.getElementById('name').value = '';
         document.getElementById('email').value = '';
-        document.getElementById('time').value = '';
-        state.selectedTime = null;
+        state.selectedSlots = [];
+        document.getElementById('slotCount').style.display = 'none';
 
-        // Refresh reservations
         await loadReservations();
         await loadTimeSlots();
       } catch (err) {
         showMessage(`Error: ${err.message}`, 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Reserve Now';
+        btn.textContent = 'Reserve Selected Slots';
       }
     });
 
-    // Event: Filter reservations by email
     document.getElementById('filterBtn').addEventListener('click', () => {
       const email = document.getElementById('filterEmail').value.trim();
       if (!email) {
@@ -626,7 +628,6 @@
       renderMyReservations();
     });
 
-    // Load initial data
     async function initialize() {
       await loadReservations();
       await loadTimeSlots();
@@ -646,56 +647,55 @@
 
       try {
         const slots = await API.getAvailable(state.selectedDate);
-        const timeSelect = document.getElementById('time');
-        
-        timeSelect.innerHTML = '<option value="">Select a time</option>';
-        const availableSlots = slots.filter(s => s.available);
-
-        if (availableSlots.length === 0) {
-          timeSelect.innerHTML = '<option disabled>No times available</option>';
-          timeSelect.disabled = true;
-          return;
-        }
-
-        availableSlots.forEach(slot => {
-          const opt = document.createElement('option');
-          opt.value = slot.time;
-          opt.textContent = slot.time;
-          timeSelect.appendChild(opt);
-        });
-
-        timeSelect.disabled = false;
-
-        // Render time slots visually
         const container = document.getElementById('slotsContainer');
+        
         const html = '<div class="slots-grid">' +
-          slots.map(s => `
-            <div class="slot ${s.available ? 'available' : 'booked'}" 
-                 data-time="${s.time}" 
-                 onclick="${s.available ? `selectTime('${s.time}')` : ''}"
-                 title="${s.available ? 'Click to select' : 'Booked'}">
-              ${s.time}
-            </div>
-          `).join('') +
+          slots.map(s => {
+            const isSelected = state.selectedSlots.includes(s.time);
+            const classNames = `slot ${s.available ? 'available' : 'booked'} ${isSelected ? 'selected' : ''}`;
+            const onclick = s.available ? `selectSlot('${s.time}')` : '';
+            const bookedText = s.bookedBy ? `<div class="slot-person">${s.bookedBy}</div>` : '';
+            
+            return `
+              <div class="${classNames}" 
+                   data-time="${s.time}" 
+                   onclick="${onclick}"
+                   title="${s.available ? 'Click to select' : `Booked by ${s.bookedBy}`}">
+                <div class="slot-time">${s.time}</div>
+                ${bookedText}
+              </div>
+            `;
+          }).join('') +
           '</div>';
         container.innerHTML = html;
-
-        if (state.selectedTime) {
-          const selected = container.querySelector(`[data-time="${state.selectedTime}"]`);
-          if (selected) selected.classList.add('selected');
-        }
       } catch (err) {
         console.error('Error loading slots:', err);
         document.getElementById('slotsContainer').innerHTML = '<p class="error">Error loading schedule</p>';
       }
     }
 
-    function selectTime(time) {
-      state.selectedTime = time;
-      document.getElementById('time').value = time;
-      
+    function selectSlot(time) {
+      const index = state.selectedSlots.indexOf(time);
+      if (index > -1) {
+        state.selectedSlots.splice(index, 1);
+      } else {
+        state.selectedSlots.push(time);
+      }
+
+      state.selectedSlots.sort();
+
       document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
-      document.querySelector(`[data-time="${time}"]`).classList.add('selected');
+      state.selectedSlots.forEach(t => {
+        const slot = document.querySelector(`[data-time="${t}"]`);
+        if (slot) slot.classList.add('selected');
+      });
+
+      if (state.selectedSlots.length > 0) {
+        document.getElementById('slotCount').style.display = 'block';
+        document.getElementById('selectedCount').textContent = state.selectedSlots.length;
+      } else {
+        document.getElementById('slotCount').style.display = 'none';
+      }
     }
 
     function renderMyReservations() {
@@ -718,7 +718,7 @@
                 <div class="reservation-time">${r.time}</div>
                 <div class="reservation-name">${r.date} • ${r.name}</div>
               </div>
-              <button class="btn btn-danger" onclick="cancelReservation('${r.id}', '${r.email}')">
+              <button class="btn btn-danger" onclick="cancelReservation('${r.date}', '${r.time}', '${r.email}')">
                 Cancel
               </button>
             </div>
@@ -727,11 +727,11 @@
         '</div>';
     }
 
-    async function cancelReservation(id, email) {
+    async function cancelReservation(date, time, email) {
       if (!confirm('Cancel this reservation?')) return;
 
       try {
-        const result = await API.cancel(id, email);
+        const result = await API.cancel(date, time, email);
         if (result.error) throw new Error(result.error);
 
         showMessage('✓ Reservation cancelled', 'success');
@@ -751,7 +751,6 @@
       setTimeout(() => msg.remove(), 4000);
     }
 
-    // Initialize
     initialize();
   </script>
 </body>
