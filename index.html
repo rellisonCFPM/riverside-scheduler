@@ -26,22 +26,22 @@
       --surface-2: #242424;
       --surface-3: #2e2e2e;
       --text-primary: #f5f5f5;
-      --text-secondary: #a1a1a1;
-      --text-tertiary: #6b6b6b;
-      --border: #2e2e2e;
-      --border-hover: #404040;
+      --text-secondary: #c0c0c0;
+      --text-tertiary: #909090;
+      --border: #333333;
+      --border-hover: #4a4a4a;
       --slot-available-bg: #1a2e1a;
       --slot-available-text: #4ade80;
       --slot-available-border: #2d4a2d;
       --slot-booked-bg: #1f1f1f;
-      --slot-booked-text: #6b6b6b;
+      --slot-booked-text: #888888;
       --slot-booked-border: #2a2a2a;
       --slot-selected-bg: #00C853;
       --slot-selected-text: #000000;
       --slot-selected-border: #00C853;
       --header-bg: #0f0f0f;
-      --info-bg: #1a1a0f;
-      --info-border: #3d3d1a;
+      --info-bg: #1f1f14;
+      --info-border: #4d4d2a;
       --info-text: #d4d48a;
       --success-bg: #0f1a0f;
       --success-text: #4ade80;
@@ -50,24 +50,28 @@
       --error-text: #f87171;
       --error-border: #991b1b;
       --toggle-bg: #242424;
-      --toggle-icon: #f5f5f5;
+      --toggle-active-bg: #333333;
+      --toggle-text: #c0c0c0;
+      --toggle-active-text: #f5f5f5;
+      --input-bg: #1f1f1f;
+      --placeholder: #666666;
     }
 
     [data-theme="light"] {
-      --bg: #fafafa;
+      --bg: #f5f5f5;
       --surface: #ffffff;
-      --surface-2: #f5f5f5;
-      --surface-3: #efefef;
+      --surface-2: #f0f0f0;
+      --surface-3: #e8e8e8;
       --text-primary: #1a1a1a;
-      --text-secondary: #6b7280;
-      --text-tertiary: #9ca3af;
-      --border: #e5e7eb;
-      --border-hover: #d1d5db;
+      --text-secondary: #555555;
+      --text-tertiary: #888888;
+      --border: #e0e0e0;
+      --border-hover: #cccccc;
       --slot-available-bg: #f0fdf4;
       --slot-available-text: #15803d;
       --slot-available-border: #bbf7d0;
       --slot-booked-bg: #f9fafb;
-      --slot-booked-text: #9ca3af;
+      --slot-booked-text: #999999;
       --slot-booked-border: #e5e7eb;
       --slot-selected-bg: #00C853;
       --slot-selected-text: #ffffff;
@@ -82,8 +86,12 @@
       --error-bg: #fef2f2;
       --error-text: #dc2626;
       --error-border: #fca5a5;
-      --toggle-bg: #f3f4f6;
-      --toggle-icon: #1a1a1a;
+      --toggle-bg: #e8e8e8;
+      --toggle-active-bg: #ffffff;
+      --toggle-text: #888888;
+      --toggle-active-text: #1a1a1a;
+      --input-bg: #f5f5f5;
+      --placeholder: #aaaaaa;
     }
 
     body {
@@ -95,18 +103,12 @@
       transition: background var(--transition), color var(--transition);
     }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
     /* Header */
     header {
       background: var(--header-bg);
       border-bottom: 1px solid var(--border);
-      padding: 1.25rem 0;
-      margin-bottom: 2rem;
+      padding: 1rem 0;
+      margin-bottom: 1.5rem;
       transition: background var(--transition), border-color var(--transition);
     }
 
@@ -116,71 +118,97 @@
       justify-content: space-between;
       max-width: 960px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
+      gap: 0.75rem;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
+      min-width: 0;
     }
 
     .header-icon {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       background: var(--green);
-      border-radius: 10px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
+      flex-shrink: 0;
     }
 
     .header-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: -0.3px;
+      white-space: nowrap;
     }
 
     .header-subtitle {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
       font-weight: 400;
     }
 
     /* Theme toggle */
-    .theme-toggle {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--toggle-bg);
-      border: 1px solid var(--border);
-      cursor: pointer;
+    .theme-toggle-group {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--transition);
-      color: var(--toggle-icon);
-      font-size: 1.1rem;
+      background: var(--toggle-bg);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 2px;
+      flex-shrink: 0;
     }
 
-    .theme-toggle:hover {
-      border-color: var(--border-hover);
-      transform: scale(1.05);
+    .theme-btn {
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      color: var(--toggle-text);
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+      letter-spacing: 0.2px;
+    }
+
+    .theme-btn.active {
+      background: var(--toggle-active-bg);
+      color: var(--toggle-active-text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .theme-btn:hover:not(.active) {
+      color: var(--text-primary);
+    }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
 
     /* Layout */
     .layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
     }
 
     @media (min-width: 768px) {
       .layout {
-        grid-template-columns: 320px 1fr;
-        gap: 2rem;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 1.5rem;
       }
     }
 
@@ -188,29 +216,29 @@
     .card {
       background: var(--surface);
       border-radius: var(--radius-lg);
-      padding: 1.5rem;
+      padding: 1.25rem;
       border: 1px solid var(--border);
       transition: background var(--transition), border-color var(--transition);
     }
 
     .card-title {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       letter-spacing: -0.2px;
     }
 
     /* Form */
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
     }
 
     label {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
       color: var(--text-secondary);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -219,14 +247,18 @@
     input[type="email"],
     input[type="date"] {
       width: 100%;
-      padding: 0.7rem 0.85rem;
+      padding: 0.65rem 0.75rem;
       border: 1px solid var(--border);
       border-radius: 10px;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-family: inherit;
-      background: var(--surface-2);
+      background: var(--input-bg);
       color: var(--text-primary);
       transition: all var(--transition);
+    }
+
+    input::placeholder {
+      color: var(--placeholder);
     }
 
     input:focus {
@@ -238,15 +270,16 @@
     /* Buttons */
     .btn {
       width: 100%;
-      padding: 0.75rem 1.25rem;
+      padding: 0.7rem 1rem;
       border: none;
       border-radius: var(--radius-pill);
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all var(--transition);
       font-family: inherit;
       letter-spacing: -0.1px;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .btn-primary {
@@ -279,8 +312,8 @@
       background: transparent;
       color: var(--red);
       border: 1px solid var(--red);
-      font-size: 0.8rem;
-      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      padding: 0.45rem 0.85rem;
       width: auto;
       border-radius: var(--radius-pill);
     }
@@ -297,13 +330,13 @@
 
     /* Slot counter */
     .slot-count {
-      margin-top: 0.75rem;
-      padding: 0.75rem;
+      margin-top: 0.65rem;
+      padding: 0.6rem;
       background: var(--surface-2);
       border-radius: 10px;
       text-align: center;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--green);
       border: 1px solid var(--border);
     }
@@ -312,25 +345,26 @@
     .tabs {
       display: flex;
       gap: 0;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       background: var(--surface-2);
       border-radius: var(--radius-pill);
-      padding: 4px;
+      padding: 3px;
     }
 
     .tab-btn {
       flex: 1;
       background: none;
       border: none;
-      padding: 0.6rem 1rem;
+      padding: 0.55rem 0.75rem;
       font-weight: 500;
       color: var(--text-secondary);
       cursor: pointer;
       border-radius: var(--radius-pill);
       transition: all var(--transition);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-family: inherit;
       letter-spacing: -0.1px;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .tab-btn.active {
@@ -353,71 +387,60 @@
 
     /* Time slots */
     .slots-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.35rem;
     }
 
     .slots-header h2 {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: -0.2px;
     }
 
     .slots-hint {
-      font-size: 0.8rem;
-      color: var(--text-tertiary);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
       margin-bottom: 1rem;
     }
 
     .slots-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-      gap: 0.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .slots-grid {
-        grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-        gap: 0.6rem;
-      }
+      gap: 0.45rem;
     }
 
     .slot {
-      padding: 0.65rem 0.4rem;
+      padding: 0.55rem 0.35rem;
       border: 1px solid var(--slot-available-border);
       border-radius: 10px;
       text-align: center;
       cursor: pointer;
       transition: all var(--transition);
-      font-size: 0.8rem;
-      font-weight: 500;
       user-select: none;
-      min-height: 58px;
+      min-height: 54px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       background: var(--slot-available-bg);
       color: var(--slot-available-text);
+      -webkit-tap-highlight-color: transparent;
     }
 
     .slot:hover {
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 
     .slot-time {
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
     }
 
     .slot-person {
-      font-size: 0.65rem;
-      font-weight: 400;
+      font-size: 0.62rem;
+      font-weight: 500;
       margin-top: 2px;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .slot.available {
@@ -441,7 +464,7 @@
       background: var(--slot-booked-bg);
       color: var(--slot-booked-text);
       border-color: var(--slot-booked-border);
-      cursor: not-allowed;
+      cursor: default;
     }
 
     .slot.booked:hover {
@@ -452,38 +475,37 @@
     /* Reservations */
     .reservation-item {
       background: var(--surface-2);
-      padding: 1rem 1.25rem;
+      padding: 0.85rem 1rem;
       border-radius: var(--radius);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 0.75rem;
       border: 1px solid var(--border);
       transition: background var(--transition), border-color var(--transition);
     }
 
-    .reservation-info { flex: 1; min-width: 180px; }
+    .reservation-info { flex: 1; min-width: 0; }
 
     .reservation-time {
-      font-size: 0.95rem;
+      font-size: 0.875rem;
       font-weight: 600;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.1rem;
     }
 
     .reservation-name {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
     }
 
     /* Messages */
     .message {
-      padding: 0.85rem 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 10px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       animation: slideIn 0.3s ease;
-      font-size: 0.875rem;
+      font-size: 0.825rem;
       font-weight: 500;
     }
 
@@ -508,83 +530,142 @@
     .info-box {
       background: var(--info-bg);
       border-left: 3px solid var(--info-border);
-      padding: 0.85rem 1rem;
+      padding: 0.75rem 0.85rem;
       border-radius: 10px;
-      margin-top: 1.25rem;
-      font-size: 0.8rem;
+      margin-top: 1rem;
+      font-size: 0.75rem;
       color: var(--info-text);
       line-height: 1.5;
     }
 
-    /* Loading */
+    /* Loading / empty */
     .loading {
       text-align: center;
-      padding: 3rem 1rem;
+      padding: 2.5rem 1rem;
       color: var(--text-tertiary);
     }
 
     .spinner {
       display: inline-block;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border: 3px solid var(--border);
       border-top-color: var(--green);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .empty-state {
       text-align: center;
-      padding: 2rem 1rem;
-      color: var(--text-tertiary);
-      font-size: 0.9rem;
+      padding: 1.5rem 1rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
     }
 
-    /* Divider */
     .divider {
       height: 1px;
       background: var(--border);
-      margin: 1.25rem 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 767px) {
-      .header-title { font-size: 1rem; }
-
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar { order: 2; }
-      .content { order: 1; }
-
-      .slots-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.4rem;
-      }
-
-      .slot { min-height: 52px; padding: 0.5rem 0.25rem; }
-      .slot-time { font-size: 0.75rem; }
-      .slot-person { font-size: 0.6rem; }
-
-      .reservation-item {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .reservation-item .btn-danger { width: 100%; text-align: center; }
+      margin: 1rem 0;
     }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 2rem 0;
+      padding: 1.5rem 0;
       color: var(--text-tertiary);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       border-top: 1px solid var(--border);
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 767px) {
+      header { padding: 0.75rem 0; margin-bottom: 1rem; }
+      .header-inner { padding: 0 0.75rem; }
+      .header-icon { width: 30px; height: 30px; font-size: 0.9rem; border-radius: 8px; }
+      .header-title { font-size: 0.9rem; }
+      .header-subtitle { font-size: 0.7rem; }
+      .theme-btn { padding: 0.35rem 0.6rem; font-size: 0.65rem; }
+
+      .container { padding: 0 0.75rem; }
+
+      .layout {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .sidebar { order: 2; }
+      .content { order: 1; }
+
+      .card { padding: 1rem; border-radius: var(--radius); }
+      .card-title { font-size: 0.85rem; margin-bottom: 0.85rem; }
+
+      label { font-size: 0.65rem; }
+      input[type="text"],
+      input[type="email"],
+      input[type="date"] {
+        padding: 0.6rem 0.7rem;
+        font-size: 0.85rem;
+      }
+
+      .form-group { margin-bottom: 0.75rem; }
+
+      .btn { padding: 0.65rem 0.85rem; font-size: 0.78rem; }
+      .btn-danger { padding: 0.4rem 0.75rem; font-size: 0.7rem; }
+
+      .tabs { margin-bottom: 1rem; }
+      .tab-btn { padding: 0.5rem 0.5rem; font-size: 0.72rem; }
+
+      .slots-header h2 { font-size: 0.875rem; }
+      .slots-hint { font-size: 0.72rem; margin-bottom: 0.75rem; }
+
+      .slots-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.35rem;
+      }
+
+      .slot {
+        min-height: 48px;
+        padding: 0.4rem 0.2rem;
+        border-radius: 8px;
+      }
+
+      .slot-time { font-size: 0.7rem; }
+      .slot-person { font-size: 0.55rem; }
+
+      .slot-count { font-size: 0.75rem; padding: 0.5rem; }
+
+      .reservation-item {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.75rem;
+        gap: 0.6rem;
+      }
+
+      .reservation-item .btn-danger {
+        width: 100%;
+        text-align: center;
+      }
+
+      .reservation-time { font-size: 0.825rem; }
+      .reservation-name { font-size: 0.7rem; }
+
+      .info-box { font-size: 0.7rem; padding: 0.65rem 0.75rem; }
+      .message { font-size: 0.78rem; padding: 0.65rem 0.85rem; }
+
+      footer { padding: 1rem 0; font-size: 0.65rem; }
+    }
+
+    /* Small phones */
+    @media (max-width: 374px) {
+      .slots-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .header-subtitle { display: none; }
+      .theme-btn { padding: 0.3rem 0.5rem; font-size: 0.6rem; }
     }
   </style>
 </head>
@@ -598,7 +679,10 @@
           <div class="header-subtitle">Session scheduler</div>
         </div>
       </div>
-      <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">☀️</button>
+      <div class="theme-toggle-group">
+        <button class="theme-btn" id="lightBtn" onclick="setTheme('light')">Light Mode</button>
+        <button class="theme-btn active" id="darkBtn" onclick="setTheme('dark')">Dark Mode</button>
+      </div>
     </div>
   </header>
 
@@ -639,9 +723,9 @@
         </div>
         <button class="btn btn-outline" id="filterBtn">Load my bookings</button>
 
-        <!--<div class="info-box">
-          💡 For bookings between 6:15 PM and 8 AM, please contact the studio directly.
-        </div> -->
+        <div class="info-box">
+          💡 For bookings between 6:15 PM and 7:59 AM, please contact the studio directly.
+        </div>
       </div>
 
       <!-- Main content -->
@@ -655,11 +739,11 @@
           <div class="slots-header">
             <h2>Available times</h2>
           </div>
-          <p class="slots-hint">Tap slots to select, then click "Reserve selected slots"</p>
+          <p class="slots-hint">Tap time slots to select, then click "Reserve selected slots"</p>
           
           <div id="slotsContainer" class="loading">
             <div class="spinner"></div>
-            <p>Select a date to view schedule</p>
+            <p>Loading today's schedule...</p>
           </div>
         </div>
 
@@ -668,7 +752,7 @@
             <h2>Your reservations</h2>
           </div>
           <div id="myReservations" class="empty-state">
-            <p>Enter your email and click "Load my bookings" to see your reservations.</p>
+            <p>Enter your email and tap "Load my bookings" to see your reservations.</p>
           </div>
         </div>
       </div>
@@ -682,22 +766,14 @@
   </footer>
 
   <script>
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-
+    // Theme
     function setTheme(theme) {
-      html.setAttribute('data-theme', theme);
-      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('lightBtn').classList.toggle('active', theme === 'light');
+      document.getElementById('darkBtn').classList.toggle('active', theme === 'dark');
       localStorage.setItem('theme', theme);
     }
 
-    themeToggle.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme');
-      setTheme(current === 'dark' ? 'light' : 'dark');
-    });
-
-    // Load saved theme or default to dark
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
 
@@ -729,9 +805,11 @@
       userEmail: null
     };
 
+    // Set today's date and auto-load
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('date').min = today;
     document.getElementById('date').value = today;
+    state.selectedDate = today;
 
     // Date change
     document.getElementById('date').addEventListener('change', (e) => {
@@ -797,7 +875,6 @@
       }
       state.userEmail = email;
       renderMyReservations();
-      // Switch to bookings tab
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.querySelector('[data-tab="reservations"]').classList.add('active');
@@ -806,8 +883,7 @@
 
     async function initialize() {
       await loadReservations();
-      // Don't auto-load slots; wait for date selection
-      document.getElementById('slotsContainer').innerHTML = '<div class="empty-state"><p>Select a date to view available times</p></div>';
+      await loadTimeSlots();
     }
 
     async function loadReservations() {
@@ -836,7 +912,7 @@
               : 'slot booked';
             const onclick = s.available ? `selectSlot('${s.time}')` : '';
             const bookedText = s.bookedBy ? `<div class="slot-person">${s.bookedBy}</div>` : '';
-            const title = s.available ? 'Click to select' : `Booked by ${s.bookedBy}`;
+            const title = s.available ? 'Tap to select' : `Booked by ${s.bookedBy}`;
             
             return `
               <div class="${cls}" 
@@ -891,7 +967,7 @@
         : [];
 
       if (!state.userEmail) {
-        container.innerHTML = '<div class="empty-state"><p>Enter your email and click "Load my bookings" to see your reservations.</p></div>';
+        container.innerHTML = '<div class="empty-state"><p>Enter your email and tap "Load my bookings" to see your reservations.</p></div>';
         return;
       }
 
