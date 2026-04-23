@@ -9,671 +9,83 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --green: #00C853;
-      --green-hover: #00b848;
-      --red: #ef4444;
-      --radius: 12px;
-      --radius-lg: 16px;
-      --radius-pill: 100px;
-      --transition: 0.2s ease;
-    }
-
-    [data-theme="dark"] {
-      --bg: #0f0f0f;
-      --surface: #1a1a1a;
-      --surface-2: #242424;
-      --surface-3: #2e2e2e;
-      --text-primary: #f5f5f5;
-      --text-secondary: #c0c0c0;
-      --text-tertiary: #909090;
-      --border: #333333;
-      --border-hover: #4a4a4a;
-      --slot-available-bg: #1a2e1a;
-      --slot-available-text: #4ade80;
-      --slot-available-border: #2d4a2d;
-      --slot-booked-bg: #333333;
-      --slot-booked-text: #cccccc;
-      --slot-booked-border: #2a2a2a;
-      --slot-selected-bg: #00C853;
-      --slot-selected-text: #000000;
-      --slot-selected-border: #00C853;
-      --header-bg: #0f0f0f;
-      --info-bg: #1f1f14;
-      --info-border: #4d4d2a;
-      --info-text: #d4d48a;
-      --success-bg: #0f1a0f;
-      --success-text: #4ade80;
-      --success-border: #166534;
-      --error-bg: #1a0f0f;
-      --error-text: #f87171;
-      --error-border: #991b1b;
-      --toggle-bg: #242424;
-      --toggle-active-bg: #333333;
-      --toggle-text: #c0c0c0;
-      --toggle-active-text: #f5f5f5;
-      --input-bg: #1f1f1f;
-      --placeholder: #666666;
-    }
-
-    [data-theme="light"] {
-      --bg: #f5f5f5;
-      --surface: #ffffff;
-      --surface-2: #f0f0f0;
-      --surface-3: #e8e8e8;
-      --text-primary: #1a1a1a;
-      --text-secondary: #555555;
-      --text-tertiary: #888888;
-      --border: #e0e0e0;
-      --border-hover: #cccccc;
-      --slot-available-bg: #f0fdf4;
-      --slot-available-text: #15803d;
-      --slot-available-border: #bbf7d0;
-      --slot-booked-bg: #f9fafb;
-      --slot-booked-text: #999999;
-      --slot-booked-border: #e5e7eb;
-      --slot-selected-bg: #00C853;
-      --slot-selected-text: #ffffff;
-      --slot-selected-border: #00C853;
-      --header-bg: #ffffff;
-      --info-bg: #fffbeb;
-      --info-border: #fde68a;
-      --info-text: #92400e;
-      --success-bg: #f0fdf4;
-      --success-text: #15803d;
-      --success-border: #86efac;
-      --error-bg: #fef2f2;
-      --error-text: #dc2626;
-      --error-border: #fca5a5;
-      --toggle-bg: #e8e8e8;
-      --toggle-active-bg: #ffffff;
-      --toggle-text: #888888;
-      --toggle-active-text: #1a1a1a;
-      --input-bg: #f5f5f5;
-      --placeholder: #aaaaaa;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      transition: background var(--transition), color var(--transition);
-    }
-
-    /* Header */
-    header {
-      background: var(--header-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 0;
-      margin-bottom: 1.5rem;
-      transition: background var(--transition), border-color var(--transition);
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1rem;
-      gap: 0.75rem;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      min-width: 0;
-    }
-
-    .header-icon {
-      width: 34px;
-      height: 34px;
-      background: var(--green);
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
-    .header-title {
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-      white-space: nowrap;
-    }
-
-    .header-subtitle {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-
-    /* Theme toggle */
-    .theme-toggle-group {
-      display: flex;
-      background: var(--toggle-bg);
-      border-radius: var(--radius-pill);
-      padding: 3px;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-
-    .theme-btn {
-      padding: 0.4rem 0.75rem;
-      border-radius: var(--radius-pill);
-      border: none;
-      background: transparent;
-      color: var(--toggle-text);
-      font-size: 0.7rem;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-      transition: all var(--transition);
-      white-space: nowrap;
-      letter-spacing: 0.2px;
-    }
-
-    .theme-btn.active {
-      background: var(--toggle-active-bg);
-      color: var(--toggle-active-text);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-    }
-
-    .theme-btn:hover:not(.active) {
-      color: var(--text-primary);
-    }
-
-    /* Container */
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    /* Layout */
-    .layout {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .layout {
-        display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: 1.5rem;
-      }
-    }
-
-    /* Cards */
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      border: 1px solid var(--border);
-      transition: background var(--transition), border-color var(--transition);
-    }
-
-    .card-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      letter-spacing: -0.2px;
-    }
-
-    /* Form */
-    .form-group {
-      margin-bottom: 0.85rem;
-    }
-
-    label {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 0.35rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="date"] {
-      width: 100%;
-      padding: 0.65rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 0.875rem;
-      font-family: inherit;
-      background: var(--input-bg);
-      color: var(--text-primary);
-      transition: all var(--transition);
-    }
-
-    input::placeholder {
-      color: var(--placeholder);
-    }
-
-    input:focus {
-      outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.15);
-    }
-
-    /* Buttons */
-    .btn {
-      width: 100%;
-      padding: 0.7rem 1rem;
-      border: none;
-      border-radius: var(--radius-pill);
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition);
-      font-family: inherit;
-      letter-spacing: -0.1px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .btn-primary {
-      background: var(--green);
-      color: #000;
-    }
-
-    .btn-primary:hover {
-      background: var(--green-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(0, 200, 83, 0.25);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--border-hover);
-      background: var(--surface-2);
-    }
-
-    .btn-danger {
-      background: transparent;
-      color: var(--red);
-      border: 1px solid var(--red);
-      font-size: 0.75rem;
-      padding: 0.45rem 0.85rem;
-      width: auto;
-      border-radius: var(--radius-pill);
-    }
-
-    .btn-danger:hover {
-      background: var(--error-bg);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Slot counter */
-    .slot-count {
-      margin-top: 0.65rem;
-      padding: 0.6rem;
-      background: var(--surface-2);
-      border-radius: 10px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 0.8rem;
-      color: var(--green);
-      border: 1px solid var(--border);
-    }
-
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 1.25rem;
-      background: var(--surface-2);
-      border-radius: var(--radius-pill);
-      padding: 3px;
-    }
-
-    .tab-btn {
-      flex: 1;
-      background: none;
-      border: none;
-      padding: 0.55rem 0.75rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      border-radius: var(--radius-pill);
-      transition: all var(--transition);
-      font-size: 0.78rem;
-      font-family: inherit;
-      letter-spacing: -0.1px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .tab-btn.active {
-      background: var(--surface);
-      color: var(--text-primary);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .tab-btn:hover:not(.active) {
-      color: var(--text-primary);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Time slots */
-    .slots-header {
-      margin-bottom: 0.35rem;
-    }
-
-    .slots-header h2 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-    }
-
-    .slots-hint {
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-    }
-
-    .slots-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-      gap: 0.45rem;
-    }
-
-    .slot {
-      padding: 0.55rem 0.35rem;
-      border: 1px solid var(--slot-available-border);
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: all var(--transition);
-      user-select: none;
-      min-height: 54px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: var(--slot-available-bg);
-      color: var(--slot-available-text);
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .slot:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
-
-    .slot-time {
-      font-weight: 600;
-      font-size: 0.78rem;
-    }
-
-    .slot-person {
-      font-size: 0.62rem;
-      font-weight: 500;
-      margin-top: 2px;
-      opacity: 0.85;
-    }
-
-    .slot.available {
-      background: var(--slot-available-bg);
-      color: var(--slot-available-text);
-      border-color: var(--slot-available-border);
-    }
-
-    .slot.available:hover {
-      border-color: var(--green);
-    }
-
-    .slot.selected {
-      background: var(--slot-selected-bg);
-      color: var(--slot-selected-text);
-      border-color: var(--slot-selected-border);
-      box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.3);
-    }
-
-    .slot.booked {
-      background: var(--slot-booked-bg);
-      color: var(--slot-booked-text);
-      border-color: var(--slot-booked-border);
-      cursor: default;
-    }
-
-    .slot.booked:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* Reservations */
-    .reservation-item {
-      background: var(--surface-2);
-      padding: 0.85rem 1rem;
-      border-radius: var(--radius);
-      margin-bottom: 0.6rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      border: 1px solid var(--border);
-      transition: background var(--transition), border-color var(--transition);
-    }
-
+    :root { --green: #00C853; --green-hover: #00b848; --red: #ef4444; --radius: 12px; --radius-lg: 16px; --radius-pill: 100px; --transition: 0.2s ease; }
+    [data-theme="dark"] { --bg: #0f0f0f; --surface: #1a1a1a; --surface-2: #242424; --surface-3: #2e2e2e; --text-primary: #f5f5f5; --text-secondary: #c0c0c0; --text-tertiary: #909090; --border: #333333; --border-hover: #4a4a4a; --slot-available-bg: #1a2e1a; --slot-available-text: #4ade80; --slot-available-border: #2d4a2d; --slot-booked-bg: #333333; --slot-booked-text: #cccccc; --slot-booked-border: #2a2a2a; --slot-selected-bg: #00C853; --slot-selected-text: #000000; --slot-selected-border: #00C853; --header-bg: #0f0f0f; --info-bg: #1f1f14; --info-border: #4d4d2a; --info-text: #d4d48a; --success-bg: #0f1a0f; --success-text: #4ade80; --success-border: #166534; --error-bg: #1a0f0f; --error-text: #f87171; --error-border: #991b1b; --toggle-bg: #242424; --toggle-active-bg: #333333; --toggle-text: #c0c0c0; --toggle-active-text: #f5f5f5; --input-bg: #1f1f1f; --placeholder: #666666; }
+    [data-theme="light"] { --bg: #f5f5f5; --surface: #ffffff; --surface-2: #f0f0f0; --surface-3: #e8e8e8; --text-primary: #1a1a1a; --text-secondary: #555555; --text-tertiary: #888888; --border: #e0e0e0; --border-hover: #cccccc; --slot-available-bg: #f0fdf4; --slot-available-text: #15803d; --slot-available-border: #bbf7d0; --slot-booked-bg: #f9fafb; --slot-booked-text: #999999; --slot-booked-border: #e5e7eb; --slot-selected-bg: #00C853; --slot-selected-text: #ffffff; --slot-selected-border: #00C853; --header-bg: #ffffff; --info-bg: #fffbeb; --info-border: #fde68a; --info-text: #92400e; --success-bg: #f0fdf4; --success-text: #15803d; --success-border: #86efac; --error-bg: #fef2f2; --error-text: #dc2626; --error-border: #fca5a5; --toggle-bg: #e8e8e8; --toggle-active-bg: #ffffff; --toggle-text: #888888; --toggle-active-text: #1a1a1a; --input-bg: #f5f5f5; --placeholder: #aaaaaa; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background var(--transition), color var(--transition); }
+    header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 1rem 0; margin-bottom: 1.5rem; transition: background var(--transition), border-color var(--transition); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; max-width: 960px; margin: 0 auto; padding: 0 1rem; gap: 0.75rem; }
+    .header-left { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
+    .header-icon { width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0; overflow: hidden; }
+    .header-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .header-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.3px; white-space: nowrap; }
+    .header-subtitle { font-size: 0.75rem; color: var(--text-secondary); font-weight: 400; }
+    .theme-toggle-group { display: flex; background: var(--toggle-bg); border-radius: var(--radius-pill); padding: 3px; gap: 2px; flex-shrink: 0; }
+    .theme-btn { padding: 0.4rem 0.75rem; border-radius: var(--radius-pill); border: none; background: transparent; color: var(--toggle-text); font-size: 0.7rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: all var(--transition); white-space: nowrap; letter-spacing: 0.2px; }
+    .theme-btn.active { background: var(--toggle-active-bg); color: var(--toggle-active-text); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    .theme-btn:hover:not(.active) { color: var(--text-primary); }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+    .layout { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2rem; }
+    @media (min-width: 768px) { .layout { display: grid; grid-template-columns: 300px 1fr; gap: 1.5rem; } }
+    .card { background: var(--surface); border-radius: var(--radius-lg); padding: 1.25rem; border: 1px solid var(--border); transition: background var(--transition), border-color var(--transition); }
+    .card-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: -0.2px; }
+    .form-group { margin-bottom: 0.85rem; }
+    label { display: block; font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    input[type="text"], input[type="email"], input[type="date"] { width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--border); border-radius: 10px; font-size: 0.875rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); transition: all var(--transition); }
+    input::placeholder { color: var(--placeholder); }
+    input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.15); }
+    .btn { width: 100%; padding: 0.7rem 1rem; border: none; border-radius: var(--radius-pill); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all var(--transition); font-family: inherit; letter-spacing: -0.1px; -webkit-tap-highlight-color: transparent; }
+    .btn-primary { background: var(--green); color: #000; }
+    .btn-primary:hover { background: var(--green-hover); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0, 200, 83, 0.25); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--border-hover); background: var(--surface-2); }
+    .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); font-size: 0.75rem; padding: 0.45rem 0.85rem; width: auto; border-radius: var(--radius-pill); }
+    .btn-danger:hover { background: var(--error-bg); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .slot-count { margin-top: 0.65rem; padding: 0.6rem; background: var(--surface-2); border-radius: 10px; text-align: center; font-weight: 600; font-size: 0.8rem; color: var(--green); border: 1px solid var(--border); }
+    .tabs { display: flex; gap: 0; margin-bottom: 1.25rem; background: var(--surface-2); border-radius: var(--radius-pill); padding: 3px; }
+    .tab-btn { flex: 1; background: none; border: none; padding: 0.55rem 0.75rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; border-radius: var(--radius-pill); transition: all var(--transition); font-size: 0.78rem; font-family: inherit; letter-spacing: -0.1px; -webkit-tap-highlight-color: transparent; }
+    .tab-btn.active { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .tab-btn:hover:not(.active) { color: var(--text-primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .slots-header { margin-bottom: 0.35rem; }
+    .slots-header h2 { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.2px; }
+    .slots-hint { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 0.45rem; }
+    .slot { padding: 0.55rem 0.35rem; border: 1px solid var(--slot-available-border); border-radius: 10px; text-align: center; cursor: pointer; transition: all var(--transition); user-select: none; min-height: 54px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--slot-available-bg); color: var(--slot-available-text); -webkit-tap-highlight-color: transparent; }
+    .slot:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .slot-time { font-weight: 600; font-size: 0.78rem; }
+    .slot-person { font-size: 0.62rem; font-weight: 500; margin-top: 2px; opacity: 0.85; }
+    .slot.available { background: var(--slot-available-bg); color: var(--slot-available-text); border-color: var(--slot-available-border); }
+    .slot.available:hover { border-color: var(--green); }
+    .slot.selected { background: var(--slot-selected-bg); color: var(--slot-selected-text); border-color: var(--slot-selected-border); box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.3); }
+    .slot.booked { background: var(--slot-booked-bg); color: var(--slot-booked-text); border-color: var(--slot-booked-border); cursor: default; }
+    .slot.booked:hover { transform: none; box-shadow: none; }
+    .reservation-item { background: var(--surface-2); padding: 0.85rem 1rem; border-radius: var(--radius); margin-bottom: 0.6rem; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; border: 1px solid var(--border); transition: background var(--transition), border-color var(--transition); }
     .reservation-info { flex: 1; min-width: 0; }
-
-    .reservation-time {
-      font-size: 0.875rem;
-      font-weight: 600;
-      margin-bottom: 0.1rem;
-    }
-
-    .reservation-name {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
-
-    /* Messages */
-    .message {
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      margin-bottom: 0.85rem;
-      animation: slideIn 0.3s ease;
-      font-size: 0.825rem;
-      font-weight: 500;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .message.success {
-      background: var(--success-bg);
-      color: var(--success-text);
-      border-left: 3px solid var(--success-border);
-    }
-
-    .message.error {
-      background: var(--error-bg);
-      color: var(--error-text);
-      border-left: 3px solid var(--error-border);
-    }
-
-    /* Info box */
-    .info-box {
-      background: var(--info-bg);
-      border-left: 3px solid var(--info-border);
-      padding: 0.75rem 0.85rem;
-      border-radius: 10px;
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      color: var(--info-text);
-      line-height: 1.5;
-    }
-
-    /* Loading / empty */
-    .loading {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      color: var(--text-tertiary);
-    }
-
-    .spinner {
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      border: 3px solid var(--border);
-      border-top-color: var(--green);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin-bottom: 0.6rem;
-    }
-
+    .reservation-time { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.1rem; }
+    .reservation-name { font-size: 0.75rem; color: var(--text-secondary); }
+    .message { padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.85rem; animation: slideIn 0.3s ease; font-size: 0.825rem; font-weight: 500; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .message.success { background: var(--success-bg); color: var(--success-text); border-left: 3px solid var(--success-border); }
+    .message.error { background: var(--error-bg); color: var(--error-text); border-left: 3px solid var(--error-border); }
+    .loading { text-align: center; padding: 2.5rem 1rem; color: var(--text-tertiary); }
+    .spinner { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 0.6rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .empty-state {
-      text-align: center;
-      padding: 1.5rem 1rem;
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-    }
-
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 1rem 0;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 1.5rem 0;
-      color: var(--text-tertiary);
-      font-size: 0.7rem;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ===== MOBILE ===== */
-    @media (max-width: 767px) {
-      header { padding: 0.75rem 0; margin-bottom: 1rem; }
-      .header-inner { padding: 0 0.75rem; }
-      .header-icon { width: 30px; height: 30px; font-size: 0.9rem; border-radius: 8px; }
-      .header-title { font-size: 0.9rem; }
-      .header-subtitle { font-size: 0.7rem; }
-      .theme-btn { padding: 0.35rem 0.6rem; font-size: 0.65rem; }
-
-      .container { padding: 0 0.75rem; }
-
-      .layout {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .sidebar { order: 2; }
-      .content { order: 1; }
-
-      .card { padding: 1rem; border-radius: var(--radius); }
-      .card-title { font-size: 0.85rem; margin-bottom: 0.85rem; }
-
-      label { font-size: 0.65rem; }
-      input[type="text"],
-      input[type="email"],
-      input[type="date"] {
-        padding: 0.6rem 0.7rem;
-        font-size: 0.85rem;
-      }
-
-      .form-group { margin-bottom: 0.75rem; }
-
-      .btn { padding: 0.65rem 0.85rem; font-size: 0.78rem; }
-      .btn-danger { padding: 0.4rem 0.75rem; font-size: 0.7rem; }
-
-      .tabs { margin-bottom: 1rem; }
-      .tab-btn { padding: 0.5rem 0.5rem; font-size: 0.72rem; }
-
-      .slots-header h2 { font-size: 0.875rem; }
-      .slots-hint { font-size: 0.72rem; margin-bottom: 0.75rem; }
-
-      .slots-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.35rem;
-      }
-
-      .slot {
-        min-height: 48px;
-        padding: 0.4rem 0.2rem;
-        border-radius: 8px;
-      }
-
-      .slot-time { font-size: 0.7rem; }
-      .slot-person { font-size: 0.55rem; }
-
-      .slot-count { font-size: 0.75rem; padding: 0.5rem; }
-
-      .reservation-item {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0.75rem;
-        gap: 0.6rem;
-      }
-
-      .reservation-item .btn-danger {
-        width: 100%;
-        text-align: center;
-      }
-
-      .reservation-time { font-size: 0.825rem; }
-      .reservation-name { font-size: 0.7rem; }
-
-      .info-box { font-size: 0.7rem; padding: 0.65rem 0.75rem; }
-      .message { font-size: 0.78rem; padding: 0.65rem 0.85rem; }
-
-      footer { padding: 1rem 0; font-size: 0.65rem; }
-    }
-
-    /* Small phones */
-    @media (max-width: 374px) {
-      .slots-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .header-subtitle { display: none; }
-      .theme-btn { padding: 0.3rem 0.5rem; font-size: 0.6rem; }
-    }
+    .empty-state { text-align: center; padding: 1.5rem 1rem; color: var(--text-secondary); font-size: 0.85rem; }
+    .divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    footer { text-align: center; padding: 1.5rem 0; color: var(--text-tertiary); font-size: 0.7rem; border-top: 1px solid var(--border); }
+    @media (max-width: 767px) { header { padding: 0.75rem 0; margin-bottom: 1rem; } .header-inner { padding: 0 0.75rem; } .header-icon { width: 32px; height: 32px; border-radius: 8px; } .header-title { font-size: 0.9rem; } .header-subtitle { font-size: 0.7rem; } .theme-btn { padding: 0.35rem 0.6rem; font-size: 0.65rem; } .container { padding: 0 0.75rem; } .layout { flex-direction: column; gap: 1rem; } .sidebar { order: 2; } .content { order: 1; } .card { padding: 1rem; border-radius: var(--radius); } .card-title { font-size: 0.85rem; margin-bottom: 0.85rem; } label { font-size: 0.65rem; } input[type="text"], input[type="email"], input[type="date"] { padding: 0.6rem 0.7rem; font-size: 0.85rem; } .form-group { margin-bottom: 0.75rem; } .btn { padding: 0.65rem 0.85rem; font-size: 0.78rem; } .btn-danger { padding: 0.4rem 0.75rem; font-size: 0.7rem; } .tabs { margin-bottom: 1rem; } .tab-btn { padding: 0.5rem 0.5rem; font-size: 0.72rem; } .slots-header h2 { font-size: 0.875rem; } .slots-hint { font-size: 0.72rem; margin-bottom: 0.75rem; } .slots-grid { grid-template-columns: repeat(4, 1fr); gap: 0.35rem; } .slot { min-height: 48px; padding: 0.4rem 0.2rem; border-radius: 8px; } .slot-time { font-size: 0.7rem; } .slot-person { font-size: 0.55rem; } .slot-count { font-size: 0.75rem; padding: 0.5rem; } .reservation-item { flex-direction: column; align-items: stretch; padding: 0.75rem; gap: 0.6rem; } .reservation-item .btn-danger { width: 100%; text-align: center; } .reservation-time { font-size: 0.825rem; } .reservation-name { font-size: 0.7rem; } .message { font-size: 0.78rem; padding: 0.65rem 0.85rem; } footer { padding: 1rem 0; font-size: 0.65rem; } }
+    @media (max-width: 374px) { .slots-grid { grid-template-columns: repeat(3, 1fr); } .header-subtitle { display: none; } .theme-btn { padding: 0.3rem 0.5rem; font-size: 0.6rem; } }
   </style>
 </head>
 <body>
   <header>
     <div class="header-inner">
       <div class="header-left">
-        <div class="header-icon">📹</div>
+        <div class="header-icon"><img src="/riverside-plus-cfpm.jpg" alt="CFPM Riverside Studio"></div>
         <div>
           <div class="header-title">Riverside Studio Scheduler</div>
           <div class="header-subtitle">Central Florida Public Media</div>
@@ -685,339 +97,85 @@
       </div>
     </div>
   </header>
-
   <div class="container">
     <div id="messages"></div>
-
     <div class="layout">
-      <!-- Sidebar -->
       <div class="card sidebar">
         <div class="card-title">Book studio time</div>
-
-        <div class="form-group">
-          <label for="name">Your name</label>
-          <input type="text" id="name" placeholder="Full name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="you@cfpm.org" required>
-        </div>
-
-        <div class="form-group">
-          <label for="date">Date</label>
-          <input type="date" id="date" required>
-        </div>
-
+        <div class="form-group"><label for="name">Your name</label><input type="text" id="name" placeholder="Full name" required></div>
+        <div class="form-group"><label for="email">Email</label><input type="email" id="email" placeholder="you@cfpm.org" required></div>
+        <div class="form-group"><label for="date">Date</label><input type="date" id="date" required></div>
         <button class="btn btn-primary" id="reserveBtn">Reserve selected slots</button>
-
-        <div id="slotCount" class="slot-count" style="display:none;">
-          <span id="selectedCount">0</span> slot(s) selected
-        </div>
-
+        <div id="slotCount" class="slot-count" style="display:none;"><span id="selectedCount">0</span> slot(s) selected</div>
         <div class="divider"></div>
-
-        <div class="form-group">
-          <label for="filterEmail">View my bookings</label>
-          <input type="email" id="filterEmail" placeholder="Enter your email">
-        </div>
+        <div class="form-group"><label for="filterEmail">View my bookings</label><input type="email" id="filterEmail" placeholder="Enter your email"></div>
         <button class="btn btn-outline" id="filterBtn">Load my bookings</button>
-
-        <!--<div class="info-box">
-          💡 For bookings between 6:15 PM and 7:59 AM, please contact the studio directly.
-        </div>-->
       </div>
-
-      <!-- Main content -->
       <div class="card content">
         <div class="tabs">
           <button class="tab-btn active" data-tab="schedule">Schedule</button>
           <button class="tab-btn" data-tab="reservations">My bookings</button>
         </div>
-
         <div id="schedule" class="tab-content active">
-          <div class="slots-header">
-            <h2>Available times</h2>
-          </div>
+          <div class="slots-header"><h2>Available times</h2></div>
           <p class="slots-hint">Tap time slots to select, then click "Reserve selected slots"</p>
-          
-          <div id="slotsContainer" class="loading">
-            <div class="spinner"></div>
-            <p>Loading today's schedule...</p>
-          </div>
+          <div id="slotsContainer" class="loading"><div class="spinner"></div><p>Loading today's schedule...</p></div>
         </div>
-
         <div id="reservations" class="tab-content">
-          <div class="slots-header">
-            <h2>Your reservations</h2>
-          </div>
-          <div id="myReservations" class="empty-state">
-            <p>Enter your email and tap "Load my bookings" to see your reservations.</p>
-          </div>
+          <div class="slots-header"><h2>Your reservations</h2></div>
+          <div id="myReservations" class="empty-state"><p>Enter your email and tap "Load my bookings" to see your reservations.</p></div>
         </div>
       </div>
     </div>
   </div>
-
-  <footer>
-    <div class="container">
-      Central Florida Public Media · Riverside Studio Scheduler
-    </div>
-  </footer>
-
+  <footer><div class="container">Central Florida Public Media · Riverside Studio Scheduler</div></footer>
   <script>
-    // Theme
-    function setTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      document.getElementById('lightBtn').classList.toggle('active', theme === 'light');
-      document.getElementById('darkBtn').classList.toggle('active', theme === 'dark');
-      localStorage.setItem('theme', theme);
-    }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-
-    // API
+    function setTheme(theme) { document.documentElement.setAttribute('data-theme', theme); document.getElementById('lightBtn').classList.toggle('active', theme === 'light'); document.getElementById('darkBtn').classList.toggle('active', theme === 'dark'); localStorage.setItem('theme', theme); }
+    const savedTheme = localStorage.getItem('theme') || 'dark'; setTheme(savedTheme);
     const API = {
-      getReservations: () => 
-        fetch('/.netlify/functions/reservations?action=list').then(r => r.json()),
-      
-      getAvailable: (date) => 
-        fetch(`/.netlify/functions/reservations?action=available&date=${date}`).then(r => r.json()),
-      
-      reserve: (date, times, name, email) => 
-        fetch('/.netlify/functions/reservations?action=reserve', {
-          method: 'POST',
-          body: JSON.stringify({ date, times, name, email })
-        }).then(r => r.json()),
-      
-      cancel: (date, time, email) =>
-        fetch('/.netlify/functions/reservations?action=cancel', {
-          method: 'DELETE',
-          body: JSON.stringify({ date, time, email })
-        }).then(r => r.json())
+      getReservations: () => fetch('/.netlify/functions/reservations?action=list').then(r => r.json()),
+      getAvailable: (date) => fetch(`/.netlify/functions/reservations?action=available&date=${date}`).then(r => r.json()),
+      reserve: (date, times, name, email) => fetch('/.netlify/functions/reservations?action=reserve', { method: 'POST', body: JSON.stringify({ date, times, name, email }) }).then(r => r.json()),
+      cancel: (date, time, email) => fetch('/.netlify/functions/reservations?action=cancel', { method: 'DELETE', body: JSON.stringify({ date, time, email }) }).then(r => r.json())
     };
-
-    const state = {
-      selectedDate: null,
-      selectedSlots: [],
-      reservations: [],
-      userEmail: null
-    };
-
-    // Set today's date and auto-load
+    const state = { selectedDate: null, selectedSlots: [], reservations: [], userEmail: null };
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById('date').min = today;
-    document.getElementById('date').value = today;
-    state.selectedDate = today;
-
-    // Date change
-    document.getElementById('date').addEventListener('change', (e) => {
-      state.selectedDate = e.target.value;
-      state.selectedSlots = [];
-      document.getElementById('slotCount').style.display = 'none';
-      loadTimeSlots();
-    });
-
-    // Tabs
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        e.target.classList.add('active');
-        document.getElementById(e.target.dataset.tab).classList.add('active');
-      });
-    });
-
-    // Reserve
+    document.getElementById('date').min = today; document.getElementById('date').value = today; state.selectedDate = today;
+    document.getElementById('date').addEventListener('change', (e) => { state.selectedDate = e.target.value; state.selectedSlots = []; document.getElementById('slotCount').style.display = 'none'; loadTimeSlots(); });
+    document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', (e) => { document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); e.target.classList.add('active'); document.getElementById(e.target.dataset.tab).classList.add('active'); }); });
     document.getElementById('reserveBtn').addEventListener('click', async () => {
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const date = state.selectedDate;
-      const times = state.selectedSlots;
-
-      if (!name || !email || !date || times.length === 0) {
-        showMessage('Please fill in name, email, select a date, and choose at least one time slot', 'error');
-        return;
-      }
-
-      const btn = document.getElementById('reserveBtn');
-      btn.disabled = true;
-      btn.textContent = 'Reserving...';
-
-      try {
-        const result = await API.reserve(date, times, name, email);
-        if (result.error) throw new Error(result.error);
-
-        showMessage(`Reserved ${times.length} slot(s) for ${date}`, 'success');
-        
-        document.getElementById('name').value = '';
-        document.getElementById('email').value = '';
-        state.selectedSlots = [];
-        document.getElementById('slotCount').style.display = 'none';
-
-        await loadReservations();
-        await loadTimeSlots();
-      } catch (err) {
-        showMessage(`Error: ${err.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Reserve selected slots';
-      }
+      const name = document.getElementById('name').value.trim(); const email = document.getElementById('email').value.trim(); const date = state.selectedDate; const times = state.selectedSlots;
+      if (!name || !email || !date || times.length === 0) { showMessage('Please fill in name, email, select a date, and choose at least one time slot', 'error'); return; }
+      const btn = document.getElementById('reserveBtn'); btn.disabled = true; btn.textContent = 'Reserving...';
+      try { const result = await API.reserve(date, times, name, email); if (result.error) throw new Error(result.error); showMessage(`Reserved ${times.length} slot(s) for ${date}`, 'success'); document.getElementById('name').value = ''; document.getElementById('email').value = ''; state.selectedSlots = []; document.getElementById('slotCount').style.display = 'none'; await loadReservations(); await loadTimeSlots(); } catch (err) { showMessage(`Error: ${err.message}`, 'error'); } finally { btn.disabled = false; btn.textContent = 'Reserve selected slots'; }
     });
-
-    // Filter
-    document.getElementById('filterBtn').addEventListener('click', () => {
-      const email = document.getElementById('filterEmail').value.trim();
-      if (!email) {
-        showMessage('Enter your email to view reservations', 'error');
-        return;
-      }
-      state.userEmail = email;
-      renderMyReservations();
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelector('[data-tab="reservations"]').classList.add('active');
-      document.getElementById('reservations').classList.add('active');
-    });
-
-    async function initialize() {
-      await loadReservations();
-      await loadTimeSlots();
-    }
-
-    async function loadReservations() {
-      try {
-        state.reservations = await API.getReservations();
-      } catch (err) {
-        console.error('Error loading reservations:', err);
-      }
-      renderMyReservations();
-    }
-
+    document.getElementById('filterBtn').addEventListener('click', () => { const email = document.getElementById('filterEmail').value.trim(); if (!email) { showMessage('Enter your email to view reservations', 'error'); return; } state.userEmail = email; renderMyReservations(); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); document.querySelector('[data-tab="reservations"]').classList.add('active'); document.getElementById('reservations').classList.add('active'); });
+    async function initialize() { await loadReservations(); await loadTimeSlots(); }
+    async function loadReservations() { try { state.reservations = await API.getReservations(); } catch (err) { console.error('Error loading reservations:', err); } renderMyReservations(); }
     async function loadTimeSlots() {
       if (!state.selectedDate) return;
-
-      const container = document.getElementById('slotsContainer');
-      container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading...</p></div>';
-
+      const container = document.getElementById('slotsContainer'); container.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading...</p></div>';
       try {
         const slots = await API.getAvailable(state.selectedDate);
-        
-        const html = '<div class="slots-grid">' +
-          slots.map(s => {
-            const isSelected = state.selectedSlots.includes(s.time);
-            const cls = s.available 
-              ? (isSelected ? 'slot selected' : 'slot available') 
-              : 'slot booked';
-            const onclick = s.available ? `selectSlot('${s.time}')` : '';
-            const bookedText = s.bookedBy ? `<div class="slot-person">${s.bookedBy}</div>` : '';
-            const title = s.available ? 'Tap to select' : `Booked by ${s.bookedBy}`;
-            
-            return `
-              <div class="${cls}" 
-                   data-time="${s.time}" 
-                   onclick="${onclick}"
-                   title="${title}">
-                <div class="slot-time">${s.time}</div>
-                ${bookedText}
-              </div>
-            `;
-          }).join('') +
-          '</div>';
-        container.innerHTML = html;
-      } catch (err) {
-        console.error('Error loading slots:', err);
-        container.innerHTML = '<div class="empty-state"><p>Error loading schedule</p></div>';
-      }
+        const html = '<div class="slots-grid">' + slots.map(s => {
+          const isSelected = state.selectedSlots.includes(s.time); const cls = s.available ? (isSelected ? 'slot selected' : 'slot available') : 'slot booked'; const onclick = s.available ? `selectSlot('${s.time}')` : ''; const bookedText = s.bookedBy ? `<div class="slot-person">${s.bookedBy}</div>` : ''; const title = s.available ? 'Tap to select' : `Booked by ${s.bookedBy}`;
+          return `<div class="${cls}" data-time="${s.time}" onclick="${onclick}" title="${title}"><div class="slot-time">${s.time}</div>${bookedText}</div>`;
+        }).join('') + '</div>'; container.innerHTML = html;
+      } catch (err) { console.error('Error loading slots:', err); container.innerHTML = '<div class="empty-state"><p>Error loading schedule</p></div>'; }
     }
-
     function selectSlot(time) {
-      const index = state.selectedSlots.indexOf(time);
-      if (index > -1) {
-        state.selectedSlots.splice(index, 1);
-      } else {
-        state.selectedSlots.push(time);
-      }
-
-      state.selectedSlots.sort();
-
-      document.querySelectorAll('.slot.available, .slot.selected').forEach(s => {
-        if (state.selectedSlots.includes(s.dataset.time)) {
-          s.classList.remove('available');
-          s.classList.add('selected');
-        } else {
-          s.classList.remove('selected');
-          s.classList.add('available');
-        }
-      });
-
-      if (state.selectedSlots.length > 0) {
-        document.getElementById('slotCount').style.display = 'block';
-        document.getElementById('selectedCount').textContent = state.selectedSlots.length;
-      } else {
-        document.getElementById('slotCount').style.display = 'none';
-      }
+      const index = state.selectedSlots.indexOf(time); if (index > -1) { state.selectedSlots.splice(index, 1); } else { state.selectedSlots.push(time); } state.selectedSlots.sort();
+      document.querySelectorAll('.slot.available, .slot.selected').forEach(s => { if (state.selectedSlots.includes(s.dataset.time)) { s.classList.remove('available'); s.classList.add('selected'); } else { s.classList.remove('selected'); s.classList.add('available'); } });
+      if (state.selectedSlots.length > 0) { document.getElementById('slotCount').style.display = 'block'; document.getElementById('selectedCount').textContent = state.selectedSlots.length; } else { document.getElementById('slotCount').style.display = 'none'; }
     }
-
     function renderMyReservations() {
-      const container = document.getElementById('myReservations');
-      const filtered = state.userEmail 
-        ? state.reservations.filter(r => r.email === state.userEmail)
-        : [];
-
-      if (!state.userEmail) {
-        container.innerHTML = '<div class="empty-state"><p>Enter your email and tap "Load my bookings" to see your reservations.</p></div>';
-        return;
-      }
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="empty-state"><p>No reservations found for this email.</p></div>';
-        return;
-      }
-
-      container.innerHTML = filtered
-        .sort((a, b) => {
-          if (a.date !== b.date) return a.date.localeCompare(b.date);
-          return a.time.localeCompare(b.time);
-        })
-        .map(r => `
-          <div class="reservation-item">
-            <div class="reservation-info">
-              <div class="reservation-time">${r.time}</div>
-              <div class="reservation-name">${r.date} · ${r.name}</div>
-            </div>
-            <button class="btn btn-danger" onclick="cancelReservation('${r.date}', '${r.time}', '${r.email}')">
-              Cancel
-            </button>
-          </div>
-        `)
-        .join('');
+      const container = document.getElementById('myReservations'); const filtered = state.userEmail ? state.reservations.filter(r => r.email === state.userEmail) : [];
+      if (!state.userEmail) { container.innerHTML = '<div class="empty-state"><p>Enter your email and tap "Load my bookings" to see your reservations.</p></div>'; return; }
+      if (filtered.length === 0) { container.innerHTML = '<div class="empty-state"><p>No reservations found for this email.</p></div>'; return; }
+      container.innerHTML = filtered.sort((a, b) => { if (a.date !== b.date) return a.date.localeCompare(b.date); return a.time.localeCompare(b.time); }).map(r => `<div class="reservation-item"><div class="reservation-info"><div class="reservation-time">${r.time}</div><div class="reservation-name">${r.date} · ${r.name}</div></div><button class="btn btn-danger" onclick="cancelReservation('${r.date}', '${r.time}', '${r.email}')">Cancel</button></div>`).join('');
     }
-
-    async function cancelReservation(date, time, email) {
-      if (!confirm('Cancel this reservation?')) return;
-
-      try {
-        const result = await API.cancel(date, time, email);
-        if (result.error) throw new Error(result.error);
-
-        showMessage('Reservation cancelled', 'success');
-        await loadReservations();
-        await loadTimeSlots();
-      } catch (err) {
-        showMessage(`Error: ${err.message}`, 'error');
-      }
-    }
-
-    function showMessage(text, type) {
-      const msg = document.createElement('div');
-      msg.className = `message ${type}`;
-      msg.textContent = text;
-      document.getElementById('messages').appendChild(msg);
-      setTimeout(() => msg.remove(), 4000);
-    }
-
+    async function cancelReservation(date, time, email) { if (!confirm('Cancel this reservation?')) return; try { const result = await API.cancel(date, time, email); if (result.error) throw new Error(result.error); showMessage('Reservation cancelled', 'success'); await loadReservations(); await loadTimeSlots(); } catch (err) { showMessage(`Error: ${err.message}`, 'error'); } }
+    function showMessage(text, type) { const msg = document.createElement('div'); msg.className = `message ${type}`; msg.textContent = text; document.getElementById('messages').appendChild(msg); setTimeout(() => msg.remove(), 4000); }
     initialize();
   </script>
 </body>
